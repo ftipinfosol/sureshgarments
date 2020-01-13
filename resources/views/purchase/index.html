@@ -1,0 +1,76 @@
+<div class="panel panel-flat">
+	<div class="navbar navbar-default navbar-xs navbar-component">
+		<ul class="nav navbar-nav no-border visible-xs-block">
+			<li><a class="text-center collapsed legitRipple" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+		</ul>
+
+		<md-content layout-padding>
+			<div class="navbar-collapse collapse" id="navbar-filter">
+				<ul class="nav navbar-nav">
+
+					<li class="col-xs-1">
+						<md-input-container class="md-block" flex-gt-sm>
+				            <label>Inv No</label>
+				            <input ng-model="search.InvNo">
+				        </md-input-container>
+					</li>
+					<li>
+						<md-input-container class="md-block" flex-gt-sm>
+				            <label>Company</label>
+				            <input ng-model="search.CName">
+				        </md-input-container>
+					</li>
+					<li>
+						<md-input-container>
+							<label>From Date</label>
+							<md-datepicker ng-model="FromDat" md-open-on-focus ></md-datepicker>
+						</md-input-container>
+					</li>
+					<li>
+						<md-input-container>
+							<label>To Date</label>
+							<md-datepicker ng-model="ToDat" md-open-on-focus md-min-date="FromDat"></md-datepicker>
+						</md-input-container>
+					</li>
+					<li>
+						<md-button class="md-raised md-primary" ng-click="searchform();" style="margin-top: 15px;">Search</md-button>
+					</li>
+
+				</ul>
+				<ul class="nav navbar-nav pull-right">										
+					<li>
+						<md-button href="#/create-purchase" md-colors="{background: 'pink'}" class="md-raised md-ink-ripple new" >New Purchase</md-button>
+					</li>
+				</ul>
+
+			</div>
+		</md-content>
+	</div>
+
+
+
+	<table ng-table="tableSorting" class="table datatable-sorting dataTable no-footer">
+		<tr ng-repeat="item in data">
+			<td data-title="'S No'">{{$index+1}}</td>
+			<td data-title="'Date'" sortable="'Date'">{{item.Date*1000|date:'dd.MM.yyyy'}}</td>
+			<td data-title="'InvNo'" sortable="'PoNo'">{{item.InvNo}}</td>
+			<td data-title="'Company Name'" sortable="'CName'"><a href="">{{item.CName}}</a></td>
+			<td data-title="'Amount'" sortable="'Amount'">{{item.Amount}}</td>
+			<td data-title="'Status'" sortable="'Status'">
+				<span class="label" ng-class="{Verified:'label-success', Unverified:'label-warning'}[item.Status]">
+					{{item.Status}}</span>
+					<a ng-click="status(item.PUID,item,$index,$event)" md-colors="{color: 'pink'}" class="dropdown-toggle md-primary" data-toggle="dropdown" ng-hide="item.Status=='Verified'"><i class="glyphicon glyphicon-check"></i></a>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<style type="text/css">
+	md-select.form-control {
+    margin-top: 0px;
+}
+md-input-container .md-errors-spacer {
+    display: none;
+}
+</style>

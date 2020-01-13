@@ -1,0 +1,374 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-flat">
+            <div class="navbar navbar-default navbar-xs navbar-component">
+                <md-content layout-padding>
+                    <div class="navbar-collapse collapse" id="navbar-filter">
+                        <ul class="nav navbar-nav pull-right"> 
+                            <li>
+                                <md-select ng-model="invtypecur" required="true" name="State" ng-change="invoicechange(invtypecur);" style="margin: 5px 35px 15px;">
+                                <md-option value="All" selected>All</md-option>
+                                <md-option ng-repeat="inv in InvType" value="{{inv}}">{{inv}}</md-option>
+                                </md-select>
+                            </li>
+                             <li>
+                                <button class="btn btn-info" md-colors="{background: 'pink'}" ng-click="print('.printpage')">Print</button>
+
+                            </li>
+                           
+                        </ul>
+                    </div>  
+                </md-content>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="example">
+  <div ng-show="url">
+        <iframe id="print" style="width: 100%;height: calc(100vh - 225px)" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+  <div id="printpage" >
+    <div class="page-container hidden-on-narrow print" >
+        <div class="printpage">
+            <div ng-repeat="invs in InvCur" class="pdf-page size-a4" ng-class="{'page-break':$index!=0}">
+                <div class="pdf-header">
+                    <div class="container" align="center" style="padding-left: 25px!important;padding-top:25px!important;padding-right: 25px!important;">
+                        <table id="tbody" >
+                            <tr>
+                                <td colspan="21" style="text-align: center!important;">
+                                    <div style="padding-right: 0px!important;padding-left: 15px;font-size: 13px;color: #000;">
+                                        <h1 style="font-size: 35px;margin: 3px;"><b>SURESH GARMENTS</b></h1>
+                                        <p>
+                                            <b> 10, Thirumalai Nagar, P.N. Road, Tirupur-2.</b>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table id="tbody" >
+                            <tr>
+                                <td style="width: 50%;">
+                                     <p style="font-size: 15px!important;text-align:center!important;margin: 0 0 0px!important;"><b>TAX INVOICE</b></p>
+                                </td>
+                                <td style="width: 50%;" >
+                                     <p style="font-size: 15px!important;text-align:center!important;margin: 0 0 0px!important;"><b>{{invs}}</b></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table id="tbody" >
+
+                            <tr>
+                                <td style="width: 25%!important;">GST NO </td>
+                                <td style="width: 25%!important;">33AJNPM2251K1Z4</td>
+                                <td style="width: 25%!important;">PAN NO</td>
+                                <td style="width: 25%!important;">AJNPM2251K1Z4</td>
+                                
+                            </tr>
+
+                             <tr>
+                                <td style="width: 25%!important;">Reverse Charge</td>
+                                <td style="width: 25%!important;">No</td>
+                                <td style="width: 25%!important;">Transportation Mode</td>
+                                <td style="width: 25%!important;">OM</td>
+                                
+                            </tr>
+
+                             <tr>
+                                <td style="width: 25%!important;">Invoice No</td>
+                                <td style="width: 25%!important;">{{data.InvNo}}</td>
+                                <td style="width: 25%!important;">Date of supply</td>
+                                <td style="width: 25%!important;">{{data.Date*1000|date:'dd-MM-yyyy'}}</td>
+                                
+                            </tr>
+
+                            <tr>
+                              <td style="width: 25%!important;">Invoice Date</td>
+                              <td style="width: 25%!important;">{{data.Date*1000|date:'dd-MM-yyyy'}}</td>
+                              <td style="width: 25%!important;">Place of Supply</td>
+                              <td style="width: 25%!important;">{{data.Place}}</td>
+                            </tr>
+                             
+                            <tr>
+                              <td style="width: 25%!important;">State</td>
+                              <td style="width: 25%!important;">Tamil Nadu (33)</td>
+                              <td style="width: 25%!important;">Vehicle No</td>
+                              <td style="width: 25%!important;">{{data.VNo}}</td>
+                            </tr>
+
+                        </table>
+
+                        <table id="tbody" >
+                            <tr>
+                                <td style="width: 50%!important;text-align: center;">
+                                   <b> Details of Receiver I Billed To :</b>
+                                </td>
+
+                                <td colspan="2"  style="width: 50%!important;text-align: center;">
+                                   <b> Details of Consignee I Shipped To :</b>
+                                </td>
+
+                            </tr>
+                            
+                            <tr>
+                                <td style="width: 50%!important;">
+                                    <b>Name :</b> <span> {{data.CName}}</span><br>
+                                    <b>Address :</b> <p style="margin-right: 40px!important;"> {{data.Address}}</p>
+                                    <span><b>GSTIN No :</b>  {{data.TIN}}</span>  <br>
+                                    <span><b>State :</b>  {{states[data.State].Name}}</span>(<span>{{states[data.State].code}}</span>)</b>
+                                </td>
+
+                                <td colspan="2"  style="width: 50%!important;">
+                                    <b>Name :</b> <span>{{data.CName}}</span><br>
+                                    <b>Address :</b> <p style="margin-right: 40px!important;">{{data.Address}}</p>
+                                    <span><b>GSTIN No :</b>  {{data.TIN}}</span>  <br>
+                                    <span><b>State :</b>  {{states[data.State].Name}}</span>(<span>{{states[data.State].code}}</span>)</b>
+                                </td>
+
+                            </tr>
+                             <tr>
+                                <td style="width: 50%!important;">
+                                   <b> PoNo : </b>
+                                </td>
+
+                                <td  style="width: 25%!important;">
+                                   <b> DcNo : </b>
+                                </td>
+
+                                <td  style="width: 25%!important;">
+                                   <b> Order No :</b>
+                                </td>
+
+
+                            </tr>
+
+                            
+                        </table>
+
+                        <table id="tbody" >
+
+                            <tr>
+                                <td style="font-size: 15px; text-align: center;width:1%;">S.No</td>
+                                <td style="font-size: 15px; text-align: center;width: 20%;">Name of Product / Service</td>
+                                <td style="font-size: 15px; width: 8%;text-align: center;">HSN Code</td>
+                                <td style="font-size: 15px; text-align: center;width: 1%;" >BOX</td>
+                                <td style="font-size: 15px; text-align: center;width: 1%;" >Qty</td>
+                                <td style="font-size: 15px; width: 1%;text-align: center;">UOM</td>
+                                <td style="font-size: 15px; text-align: center;width:4%;">Rate/Pcs</td>
+                                <td style="font-size: 15px; width:4%;text-align:center;padding: 3px;">Amount</td>
+                            </tr>
+
+                            <tr  ng-repeat="detail in data.details">
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{$index+1}}
+                                </td>
+                                <td style="border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;font-size: 14px;" >{{detail.IName}}
+                                </td>
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.HSN}}
+                                </td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.Box}}
+                                </td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.Qty}}
+                                </td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.UOM}}
+                                </td>
+                               
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.Rate| currency : " " : 2}}</td>
+                                 <td style="text-align: right;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;">{{detail.Amount| currency : " " : 2}}</td>
+                                
+                            </tr>
+
+                            <tr ng-style="myheight" >
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                                 <td style="text-align: center;border-bottom: none;border-top: none;padding-top: 0px;padding-bottom: 0px;"></td>
+                            </tr>
+
+                             <tr>
+                                <td style="text-align: center;width:1%;"></td>
+                                <td style="text-align: center;width: 20%;"></td>
+                                <td style="width: 1%;text-align: center;"></td>
+                                <td style="width: 1%;text-align: center;"></td>
+                                <td style="text-align: center;width: 1%;">{{data.Qty}}</td>
+                                <td style="text-align: center;width:4%;"></td>
+                                <td style="text-align: center;width:4%;"></td>
+                                <td style="width:4%;text-align:center;padding: 3px;">{{data.Amount| currency : "" : 2}}</td>
+                            </tr>
+
+                        </table>
+
+                        <table id="tbody" >
+
+                            <tr >
+                                <td  rowspan="8" style="width: 50%">
+                                     <h5 style="line-height: 21px;font-size: 11px;margin-top: -4px;"><u>FOR NEFT OR RTGS:<br>SURESH GARMENTS (BANK DETAILS)</u></h5> 
+                                     <h6 style="line-height: 16px;margin-bottom: 0px;font-size: 11px;">
+                                        <span style="padding-right: 45px;">BANK NAME   </span>: <b>DHANALAXMI</b>  <br>
+                                        <span style="padding-right: 65px;">BRANCH      </span>: <b>TIRUPUR</b>  <br>
+                                        <span style="padding-right: 22px;">ACCOUNT NAME    </span>: <b>SURESH GARMENTS</b> <br>
+                                        <span style="padding-right: 36px;">ACCOUNT NO.    </span>: <b>012305300005864</b>  <br>
+                                        <span style="padding-right: 54px;">IFSC CODE   </span>: <b>DLXB0000123</b>  <br>
+                                    </h6>
+                               </td>
+                               
+                                <td ><b>Total Amount Before Tax</b></td>
+                                <td  style="text-align: right;font-size:15px;">
+                                    <b>{{data.Amount | currency : " " : 2}}</b>
+                                </td>
+                                
+                            </tr>
+                             <tr >
+                                <td >Add : CGST {{data.details[0].RCGST}} %</td>
+                                <td  style="text-align: right;">{{data.CGST| currency : " " : 2}}</td>
+                            </tr>
+                            <tr>
+                            <td >Add : SGST {{data.details[0].RSGST}} %</td>
+
+                                <td  style="text-align: right;">{{data.SGST| currency : " " : 2}}</td>
+                                
+                            </tr>
+                            <tr>
+                            </tr>
+                             
+                            <tr>
+                                <td >Add : IGST {{data.details[0].RIGST}} %</td>
+                                <td  style="text-align: right;">{{data.IGST| currency : " " : 2}}</td>
+
+                            </tr>
+
+                             <tr>
+                                <td >RoundOff</td>
+                                <td  style="text-align: right;">{{data.Round| currency : " " : 2}}</td>
+
+                            </tr>
+                            <tr>
+                                <td ><b>Total Amount After Tax</b></td>
+                                <td  style="text-align: right;font-size:15px;"><b>{{data.Total| currency : " " : 2}}</b></td>
+                            </tr>
+                            <tr>
+                                <td ><b>No of Carton</b></td>
+                                <td  style="text-align: right;font-size:15px;">{{data.Ctn}}</td>
+                            </tr>
+                           
+
+                            <tr>
+                                <td colspan="3" >
+                                     <p style="font-size: 15px!important;margin: 0 0 0px!important;"><b>Total Amount : {{data.Total|words}} Only.</b></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="tbody" >
+
+
+                             
+                            <tr>
+                                
+                                <td  style="text-align:left;width: 70%">                                    
+                                    <span style="font-size: 16px;">Terms and Condition</span><br>
+                                   PAYMENT BEYOND DUE DAYS WILL ATTRACT 24% INTEREST     <br><br>
+                                </td>
+                                <td  style="text-align: center;width: 30%">
+                                    <p style="font-size: 11px;"><b>For SURESH GARMENTS</b></p>
+                                    <br>    
+                                    <br>Authorised signatory
+                                </td>
+                            </tr>
+                        </table>
+
+                        <style>
+
+                            .pdf-page {
+                                margin: 0 auto;
+                                box-sizing: border-box;
+                                box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+                                background-color: #fff;
+                                color: #333;
+                                position: relative;
+                            }
+
+                             .size-a4 { width: 8.3in; height: 11.7in; }
+
+                                table {
+                                    width:100%;
+                                }
+                                 table, th, td {
+                                    border: 1px solid black;
+                                    border-collapse: collapse;
+                                    font-family: 'Average', serif;
+                                    font-size: 12px;
+                                }
+                                 th {
+                                    padding: 10px;
+                                    text-align: left;
+                                    font-family: 'Average', serif;
+                                    font-size: 12px;
+                                }
+
+                                 td {
+                                    padding: 3px;
+                                    text-align: left;
+                                    font-family: 'Average', serif;
+                                    font-size: 12px;
+                                }
+                                .container{
+                                     width: 21cm;
+                              height: 29.7cm; 
+                              font-family: 'Average', serif;
+                              font-size: 12px;
+                              
+                                }
+
+                            .tr td{
+                            text-align: center;
+                            border-bottom: 0;
+                            border-top: 0;
+                            padding-bottom: 0px;
+                            font-family: 'Average', serif;
+                            font-size: 12px;
+                            }
+
+                            .sno th{
+                                text-align: center;
+                                font-size: 12px;
+                            }
+
+                            .inv td{
+                                padding: 0px;
+                                border: none;
+                                
+                                line-height: 14px;
+                                
+                                font-family: 'Average', serif;
+                                font-size: 12px;
+                            }
+                            .headernone{
+                              margin-top: 135px;
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+          function getPDF(selector) {
+            kendo.drawing.drawDOM($(selector)).then(function(group){
+              kendo.drawing.pdf.toDataURL(group, function(dataURL){
+                window.open(dataURL,'_blank');
+              });
+            });
+          }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Average" rel="stylesheet">
+</div>
+</div>

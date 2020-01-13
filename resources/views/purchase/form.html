@@ -1,0 +1,155 @@
+<div class="row">
+	<div class="form-horizontal">
+		<div class="col-md-12">
+			<div class="panel panel-flat">
+				<div class="panel-body">
+					<form name="CampaignCreate" ng-submit="create();">
+						<div class="form-group col-sm-4">
+							<label class="col-lg-3 bel">Supplier:</label>
+							<div class="col-lg-9">
+							<md-autocomplete ng-show="Suppliers" required placeholder="Search Supplier Here " style="min-width: 160px;"  md-no-cache="true"
+							md-selected-item-change="customerchange();"
+							md-selected-item="form.Supplier" md-min-length="0" md-search-text="searchText" md-items="lead in query(searchText)" md-item-text="lead.CName">
+							  <md-item-template>
+							    <span md-highlight-text="searchText"  md-highlight-flags="^i">{{lead.CName}}</span>
+							  </md-item-template>
+							  <md-not-found>Match Not Found</md-not-found>
+							</md-autocomplete>
+							</div>
+						</div>
+
+						<div class="form-group  col-sm-2">
+							<label class="col-lg-3 bel">Date:</label>
+							<div class="col-lg-9">
+								<md-datepicker ng-model="form.Dat" md-placeholder="Date" ></md-datepicker>
+							</div>
+						</div>
+						<div class="form-group  col-sm-3">
+							<label class="col-lg-6 bel">Inv No:</label>
+							<div class="col-lg-6">
+								<input type="text" class="form-control" autocomplete="off" ng-model="form.InvNo" name="Name" >
+							</div>
+						</div>
+
+						<div class="form-group  col-sm-2">
+							<label class="col-lg-4 bel">Amount:</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" autocomplete="off" ng-model="form.Amount" name="Name" >
+							</div>
+						</div>
+
+						<div class="form-group  col-sm-1">
+							<button type="submit"  class="btn bg-indigo">Save <i class="icon-arrow-right14 position-right"></i></button>
+						</div>
+					</form>	
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+
+			<div class="panel panel-flat">
+
+				<table ng-table="tableSorting" class="table datatable-sorting dataTable no-footer">
+					<tr ng-repeat="item in data">
+						<td data-title="'S No'">{{$index+1}}</td>
+						<td data-title="'Date'" sortable="'Date'">{{item.Date*1000|date:'dd.MM.yyyy'}}</td>
+						<td data-title="'InvNo'" sortable="'PoNo'">{{item.InvNo}}</td>
+						<td data-title="'Company Name'" sortable="'CName'"><a href="">{{item.CName}}</a></td>
+						<td data-title="'Amount'" sortable="'Amount'">{{item.Amount}}</td>
+						<td data-title="'Status'" sortable="'Status'">
+							<span class="label" ng-class="{Verified:'label-success', Unverified:'label-warning'}[item.Status]">
+								{{item.Status}}</span>
+						</td>
+
+						<td data-title="'Actions'" class="col-xs-1">
+							<ul class="icons-list">
+								<li class="dropdown">
+									<a href="" ng-click="edit_purchase(item,$index,$event)" class="dropdown-toggle md-primary" data-toggle="dropdown">
+										<i class="glyphicon glyphicon-edit"></i>
+									</a>
+								</li>
+								<li class="dropdown">
+									<a href="" ng-click="delete(item.PUID,$index,$event)"  class="dropdown-toggle"  md-colors="{color: 'pink'}" data-toggle="dropdown">
+										<i class="glyphicon glyphicon-trash"></i>
+									</a>
+								</li>
+							</ul>
+						</td>
+
+					</tr>
+				</table>
+			</div>
+
+
+			<style type="text/css">
+				md-select.form-control {
+			    margin-top: 0px;
+				}
+				md-input-container .md-errors-spacer {
+				    display: none;
+				}
+			</style>
+
+		</div>
+
+		<!-- <div class="col-md-4" ng-repeat="pur in data">
+			<div class="panel panel-flat">
+				<div class="panel-body" style="padding: 0px;">
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td style="font-weight: bold;width: 20%;padding-right: 0px;">Supplier</td>
+									<td>{{pur.CName}}</td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;width: 20%;padding-right: 0px;">Inv No </td>
+									<td>{{pur.InvNo}}</td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;width: 20%;padding-right: 0px;">Date</td>
+									<td>{{pur.Date*1000|date:'dd.MM.yyyy'}}</td>
+								</tr>
+								<tr>
+									<td style="font-weight: bold;width: 20%;padding-right: 0px;">Amount</td>
+									<td>{{pur.Amount}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</div>
+
+<style type="text/css">
+md-select.form-control{margin-top: 0px;}md-input-container .md-errors-spacer{display: none;}.panel{margin-bottom: 5px;}.panel-body{padding-bottom: 5px; padding-left: 0px; padding-right: 0px;}::-webkit-input-placeholder{text-align: center;}:-moz-placeholder{/* Firefox 18- */ text-align: center;}::-moz-placeholder{/* Firefox 19+ */ text-align: center;}:-ms-input-placeholder{text-align: center;}table.table-bill>thead>tr{background-color: #00BCD4; color: #fff;}h5{font-weight: 500;}.panel-heading{padding-top: 5px; padding-bottom: 5px;}label{text-align: center; margin-bottom: 0px;}.table-bill>tbody>tr>td{border-top: none;}.table-bill>tfoot>tr>th{border-top: none;}.table-bill>tbody>tr>td{padding: 12px 5px;text-align: center; vertical-align: middle;}.table-bill>thead>tr>th,.table-bill>tfoot>tr>th{padding: 12px 5px; text-align: center; font-weight: bold;}.bol{border-left: 1px solid #bbb;}.bor{border-right: 1px solid #bbb;}.bob{border-bottom: 1px solid #bbb;}.bel{padding-top: 9px;text-align: right;font-weight: bold;}
+
+.table-bill>thead>tr>th {
+    border-bottom: 0px solid #bbb;
+    border-right: 1px solid #bbb;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.amt{
+	text-align: right;
+}
+.bill{
+	background-color: rgb(239, 239, 239);
+}
+
+.tab .table-bill { display: table; }.tab .table-bill>* { display: table-row; }.tab .table-bill>*>* { display: table-cell; }
+
+	.totdis>tbody>tr>th,.totdis>tbody>tr>td{
+		padding-left: 10px;
+		padding-right: 20px;
+	}
+	table.totdis{
+		    width: 100%;
+	}
+</style>

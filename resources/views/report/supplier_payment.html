@@ -1,0 +1,148 @@
+<style>
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 5px 5px;
+    }
+</style>
+<div class="panel panel-flat">
+	<div class="navbar navbar-default navbar-xs navbar-component">
+		
+		<ul class="nav navbar-nav no-border visible-xs-block">
+			<li><a class="text-center collapsed legitRipple" data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+		</ul>
+		
+		<md-content layout-padding>
+			<div class="navbar-collapse collapse" id="navbar-filter">
+				<ul class="nav navbar-nav">	
+
+					<li>
+						<md-autocomplete placeholder="Search Supplier Here " style="min-width: 160px;" md-selected-item="search.Supplier" md-min-length="0" md-search-text="searchText" md-items="lead in query(searchText)" md-item-text="lead.CName">
+						  <md-item-template>
+						    <span md-highlight-text="searchText"  md-highlight-flags="^i">{{lead.CName}}</span>
+						  </md-item-template>
+						  <md-not-found>
+						    No matches found.
+						</md-not-found>
+						</md-autocomplete>
+					</li>	
+					<li>
+						<md-input-container style="margin-top: 8px;">
+						<label>From Date</label>
+						<md-datepicker ng-model="FromDat" md-open-on-focus ></md-datepicker>
+						</md-input-container>
+					</li>
+					<li>
+						<md-input-container style="margin-top: 8px;">
+						<label>To Date</label>
+						<md-datepicker ng-model="ToDat" md-open-on-focus md-min-date="FromDat"></md-datepicker>
+						</md-input-container>
+					</li>			
+
+					<li>
+						<button ng-click="searchform();"   class="btn btn-primary btn-sm " style="margin-left: 20px; margin-top: 5px;"><i class="glyphicon glyphicon-search"></i></button>
+					</li>
+
+				</ul>
+
+				<ul class="nav navbar-nav pull-right">	
+					<li  style="margin-left: 20px;">
+						<md-button ng-click="print();" md-colors="{background: 'pink'}" class="md-raised md-ink-ripple" >Print</md-button>
+
+					</li>
+
+				</ul>
+			</div>
+		</md-content>
+	</div>
+</div>
+
+
+	<div id="printpage">
+		<div ng-show="url">
+		    <iframe id="print" style="width: 100%;height: calc(100vh - 225px)" frameborder="0" allowfullscreen></iframe>
+		</div>
+
+		<div class="page-container hidden-on-narrow print" >
+			<div class="printpage pdf-page size-a4">
+				<div class="pdf-header"  id="excel">
+					<div style="padding-left: 20px;padding-right: 20px;">
+
+						<div class="row">
+							<div class="col-sm-7">
+								<h3>{{Authuser.CName}}</h3>
+								<h5>{{data.CName}}</h5>
+							</div>
+							<div class="col-sm-5">
+								<h4>Supplierwise Payment Report</h4>
+								<h6>From: {{data.From*1000|date:'dd-MM-yyyy'}}</h6>
+								<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To: {{data.To*1000|date:'dd-MM-yyyy'}}</h6>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>S.No</th>										
+										<th>InvNo</th>
+										<th>Date</th>
+										<th style="text-align: right;">Purchase Amount </th>
+										<th style="text-align: right;">Paid Amount</th>
+										<th style="text-align: right;">Pending Amount</th>
+									</tr>
+								</thead>
+								<tbody>	
+									<tr>
+										<td ></td>
+										<td ></td>
+										<td ></td>
+										<td ></td>
+										<td style="text-align: right;font-weight: bold;"><span >By Opening</span></td>
+										<td style="text-align: right;font-weight: bold;">{{data.Beginning|currency:" ":2}}</td>
+									</tr>
+									<tr ng-repeat="da in data.Report">						
+										<td>{{$index+1}}</td>		
+										<td>{{da.No}}
+											<span ng-if="da.Type">- {{da.Type}}</span>
+										</td>
+										<td>{{da.Date*1000|date:'dd.MM.yyyy'}}</td>
+										<td style="text-align:right;">{{da.InvAmt|currency:" ":2}}</td>
+										<td style="text-align:right;">{{da.RecAmt|currency:" ":2}}</td>
+										<td style="text-align:right;">{{da.Bal|currency:" ":2}}</td>
+									</tr>
+								</tbody>
+
+								<tfoot>		
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th style="text-align: right;">{{data.Inv| currency : " " : 2}}</th>
+										<th style="text-align: right;">{{data.Rec| currency : " " : 2}}</th>
+										<th style="text-align: right;">{{data.Report[data.Report.length-1].Bal | currency : " " : 2}}</th>
+									</tr>
+								</tfoot>
+
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+
+<style>
+.pdf-page {
+margin: 0 auto;
+box-sizing: border-box;
+box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+background-color: #fff;
+color: #333;
+position: relative;
+}
+.size-a4 { width: 8.3in; min-height: 11.7in; }
+
+
+</style>
+</div>
